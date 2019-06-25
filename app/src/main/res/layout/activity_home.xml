@@ -12,6 +12,7 @@
         >
     <EditText
         android:layout_width="300dp"
+        android:id="@+id/taskTxt"
         android:layout_height="wrap_content"
         android:hint="Add A Task"
         />
@@ -19,8 +20,7 @@
         android:layout_width="wrap_content"
         android:id="@+id/addBtn"
         android:text="Add"
-        android:onClick="writeOnDB"
-        android:layout_height="wrap_content" />
+         android:layout_height="wrap_content" />
 
     </LinearLayout>
 
@@ -35,4 +35,9 @@
         android:layout_marginTop="100dp"
         android:onClick="logOUT"
         android:text="logout" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tasksA"/>
 </LinearLayout>
