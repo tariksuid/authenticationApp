@@ -6,26 +6,6 @@
     android:layout_height="match_parent">
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_marginTop="20dp"
-        android:layout_height="wrap_content"
-        >
-    <EditText
-        android:layout_width="300dp"
-        android:id="@+id/taskTxt"
-        android:layout_height="wrap_content"
-        android:hint="Add A Task"
-        />
-    <Button
-        android:layout_width="wrap_content"
-        android:id="@+id/addBtn"
-        android:text="Add"
-         android:layout_height="wrap_content" />
-
-    </LinearLayout>
-
 
 
 
