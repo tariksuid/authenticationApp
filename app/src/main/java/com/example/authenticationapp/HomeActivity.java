@@ -12,6 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -24,26 +26,42 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+ import java.util.Map;
 
-public class HomeActivity<list> extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity {
     FirebaseFirestore db;
-String tasks = "" ;
-    FirebaseUser user_id;
+     FirebaseUser user_id;
     Button add;
     EditText editText;
-    TextView todo;
+     RecyclerView rc ;
+    ArrayList<TaskModel> ar ;
+    TaskAdapter ta ;
+   // ArrayList <CheckBox> ar2 ;
+    //RecyclerView.LayoutManager rvl ;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        rc= findViewById(R.id.task_list);
+       // rc.setHasFixedSize(true);
+
+       // rc.setItemViewCacheSize(5);
+        rc.setLayoutManager(new LinearLayoutManager(this));
+       // configRV();
+        ar = new ArrayList<>();
+ar.clear();
         db = FirebaseFirestore.getInstance();
         add = findViewById(R.id.addBtn);
         editText = findViewById(R.id.taskTxt);
-todo = findViewById(R.id.tasksA);
-        readFromDB();
+
+
+      //  ar = TaskModel.createContactsList(20);
+
+
+       //todo = findViewById(R.id.taskA);
+
 
         //read the DB
         add.setOnClickListener(new View.OnClickListener() {
@@ -54,8 +72,9 @@ todo = findViewById(R.id.tasksA);
                 writeOnDB();
             }
         });
+          user_id = FirebaseAuth.getInstance().getCurrentUser();
 
-        user_id = FirebaseAuth.getInstance().getCurrentUser();
+         readFromDB();
 
     }
 
@@ -72,6 +91,8 @@ todo = findViewById(R.id.tasksA);
          //  user.put("username", "Tarik");
         user.put("tID", user_id.getUid());
         user.put("task", editText.getText().toString());
+
+        user.put("status",false) ;
 
         // Add a new document with a generated ID
         db.collection("tasks")
@@ -94,8 +115,9 @@ todo = findViewById(R.id.tasksA);
 
 
     void readFromDB() {
-        final FirebaseUser user_id = FirebaseAuth.getInstance().getCurrentUser();
-        db.collection("tasks")
+        ta = new TaskAdapter(ar);
+
+          db.collection("tasks")
                 .whereEqualTo("tID", user_id.getUid())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -108,18 +130,33 @@ todo = findViewById(R.id.tasksA);
 
                         for (QueryDocumentSnapshot todo : task.getResult()) {
                             String name = todo.get("task").toString();
-                            insertTodoUi(name);
+
+                            Log.d("TASK" , name) ;
+                            boolean c  =(boolean) todo.get("status" ) ;
+                            Log.d("STATUS", String.valueOf(c)) ;
+
+                            insertTodoUi(name , false);
+
                         }
                     }
                 });
+
+        //configRV();
+
+
+     }
+
+    private void configRV() {
+
+        TaskAdapter ta = new TaskAdapter(ar);
+        rc.setAdapter(ta);
     }
 
-    private void insertTodoUi(String name) {
-        // Add to View
-       // TextView todo = new TextView(getApplicationContext());
+    private void insertTodoUi(String name , boolean b) {
 
-        tasks = tasks + "\n" + name ;
-        todo.setText(tasks);
+
+         rc.setAdapter(ta);
+    ar.add(new TaskModel(name , b)) ;
 
 
 

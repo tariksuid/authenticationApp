@@ -2,7 +2,6 @@ package com.example.authenticationapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,14 +14,12 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import static java.lang.Boolean.FALSE;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -58,11 +55,11 @@ public class MainActivity extends AppCompatActivity {
 
         boolean b = sharedPreferences.getBoolean("CHK", false);
 
-        FirebaseUser currentUser = mAuth.getCurrentUser();
 
         if (b) {
             mEmail.setText(Email);
             checkBox.setChecked(true);
+
         }
     }
 
@@ -87,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void signUP(View view) {
+       // FirebaseUser currentUser = mAuth.getCurrentUser();
 
         if (checkValidity()) {
             email = mEmail.getText()
@@ -136,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
             password = mPassword.getText().toString();
 
             if (!isValidEmail(email)) {
-                Toast.makeText(MainActivity.this, "invalid email format \n " + " maik@mail.com",
+                Toast.makeText(MainActivity.this, "invalid email format \n " + " maike@mail.com",
                         Toast.LENGTH_LONG).show();
             } else {
                 mAuth.signInWithEmailAndPassword(email, password)

@@ -8,4 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <string-array name="options">
+    </string-array>
+
 </resources>
