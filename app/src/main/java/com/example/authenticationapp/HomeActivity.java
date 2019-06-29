@@ -129,13 +129,17 @@ public class HomeActivity extends AppCompatActivity {
                             // Log.e(TAG, "fetchTodos failed", task.getException());
                             return;
                         }
+                        int x = 0 ;
                         //user_id = FirebaseAuth.getInstance().getCurrentUser();
                         for (QueryDocumentSnapshot todo : task.getResult()) {
-                            String name = todo.get("username").toString();
-                            Log.d("TASK", name);
-                            Long c = (Long) todo.get("dWater");
-                            Log.d("STATUS", String.valueOf(c));
-                            insertTodoUi(name, c);
+                            if (x <10) {
+                                String name = todo.get("username").toString();
+                                Log.d("TASK", name);
+                                Long c = (Long) todo.get("dWater");
+                                Log.d("STATUS", String.valueOf(c));
+                                insertTodoUi(name, c);
+                                x++;
+                            }
                         }
                     }
                 });

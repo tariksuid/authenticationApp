@@ -44,8 +44,6 @@ public class MainActivity extends AppCompatActivity {
         checkBox = findViewById(R.id.checkBox);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = sharedPreferences.edit();
-
-
     }
 
     public void onStart() {
@@ -122,13 +120,10 @@ public class MainActivity extends AppCompatActivity {
                         });
             }
         }
-
     }
 
 
     public void signIN(View v) {
-
-
         if (checkValidity()) {
             email = mEmail.getText().toString();
             password = mPassword.getText().toString();
@@ -155,8 +150,6 @@ public class MainActivity extends AppCompatActivity {
                                             Toast.LENGTH_SHORT).show();
                                     //updateUI(null);
                                 }
-
-                                // ...
                             }
                         });
 
@@ -164,23 +157,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     public boolean checkValidity() {
-
         if (TextUtils.isEmpty(mEmail.getText().toString()) || TextUtils.isEmpty(mPassword.getText().toString())) {
             String error = "";
             if (TextUtils.isEmpty(email))
                 error += "Email Is Needed" + "\n";
             if (TextUtils.isEmpty(password))
                 error += "Password Is Needed";
-
             Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
             return false;
-
         }
         return true;
     }
-
 
     public static boolean isValidEmail(CharSequence target) {
         return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
